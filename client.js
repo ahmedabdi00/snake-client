@@ -3,6 +3,10 @@ const net = require("net");
 // Function to send the name to the server
 const sendName = (conn) => {
   conn.write("Name: AA"); 
+};  
+
+const sendMoveUp = (conn) => {
+  conn.write("Move: up");
 };
 
 // Establishes a connection with the game server
@@ -22,6 +26,7 @@ const connect = () => {
   conn.on("connect", () => {
     console.log("Connected to server!");
     sendName(conn); // Send the name upon connection
+    // sendMoveUp(conn); //Send the command to move up
   });
 
   return conn;
