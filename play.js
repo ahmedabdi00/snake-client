@@ -7,8 +7,24 @@ const connect = function () {
     port: 50541, // Corrected PORT number here
   });
 
+  const setupInput = function () {
+    const stdin = process.stdin;
+    stdin.setRawMode(true);
+    stdin.setEncoding("utf8");
+    stdin.resume();
+    return stdin;
+  };
+
+  const handleUserInput = function () {
+    if (key === "\u0003") {
+      process.exit();
+    }
+  };
+
   // interpret incoming data as text
   conn.setEncoding("utf8");
+
+  stdin.on("data", handleUserInput);
 
   // Event handler for incoming data
   conn.on("data", (data) => {
