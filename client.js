@@ -1,32 +1,35 @@
 const net = require("net");
 
-// Function to send the name to the server
 const sendName = (conn) => {
-  conn.write("Name: AA"); 
-};  
+  conn.write("Name: AA");
+};
 
 const sendMoveUp = (conn) => {
   conn.write("Move: up");
 };
+const sendMoveLeft = (conn) => {
+  conn.write("Move: left");
+};
+const sendMoveDown = (conn) => {
+  conn.write("Move: down");
+};
+const sendMoveRight = (conn) => {
+  conn.write("Move: right");
+};
 
-// Establishes a connection with the game server
 const connect = () => {
   const conn = net.createConnection({
     host: "172.20.44.112",
     port: 50541,
   });
 
-  // Interpret incoming data as text
   conn.setEncoding("utf8");
 
-  // Event handler for incoming data
   conn.on("data", (data) => console.log("Server says:", data));
 
-  // Event handler for the "connect" event
   conn.on("connect", () => {
     console.log("Connected to server!");
-    sendName(conn); // Send the name upon connection
-    // sendMoveUp(conn); //Send the command to move up
+    sendName(conn);
   });
 
   return conn;
@@ -34,3 +37,5 @@ const connect = () => {
 
 console.log("Connecting ...");
 const conn = connect();
+
+module.exports = { connect, sendMoveUp }; // Export the connect function and sendMoveUp for use in other files
